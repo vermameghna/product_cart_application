@@ -1,0 +1,25 @@
+@charset "ISO-8859-1";
+.btn{
+margin: auto;
+}
+.btn button{
+background-color: #4fa16e;
+color:white;
+height:70;
+width:200px;
+margin:10px;
+padding:7px;
+font-size: 1.3rem;
+cursor: pointer;
+}
+
+.btn-red button{
+color:white;
+height:70;
+width:200px;
+margin:10px;
+padding:7px;
+font-size: 1.3rem;
+cursor: pointer;
+background-color: #a34563;
+}
