@@ -2,7 +2,6 @@
 <%@page import="com.productcart.productdao.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <table border="1">
     <%
         List<Product> products = (List<Product>)request.getAttribute("products");
@@ -50,7 +50,7 @@
                      </td>
                      
                      <td>
-                     <a href="ProductController.do?action=removeById&id=<%= product.getId()%>">Delete this product</a>
+                     <a href="ProductController.do?action=updateById&id=<%= product.getId()%>">Update this product</a>
                      </td>
                        
                 </tr>

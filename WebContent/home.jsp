@@ -24,6 +24,11 @@
   <a href="ProductController.do?action=remove"><button>Remove a product</button></a>
   </div>
   
+  <div class="btn">
+  <a href="ProductController.do?action=update"><button>Update a product</button></a>
+  </div>
+  
+  
   <div class="btn-red">
   <a href="LogoutController"><button>Logout</button></a>
   </div>

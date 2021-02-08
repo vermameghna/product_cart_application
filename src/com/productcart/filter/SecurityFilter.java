@@ -28,7 +28,7 @@ public class SecurityFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		System.out.println("In am in filter");
+		
 		boolean isLogged = false;
 		HttpSession httpSession = req.getSession();
 		
@@ -44,9 +44,6 @@ public class SecurityFilter implements Filter {
 		}else {
 			res.sendRedirect("login.jsp?error=Please login");
 		}
-		
-		
-		
 		
 		
 	}

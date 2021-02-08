@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import com.productcart.dao.ConnectionFactory;
 import com.productcart.dao.DataAccessException;
 
@@ -67,6 +69,54 @@ public class ProductDaoImpl implements ProductDao{
 		} catch (SQLException e) {
 			throw new DataAccessException(e.getCause().getMessage());
 		}
+	}
+
+	@Override
+	public Product getProductById(int id) {
+		Product tempProduct = null;
+		try {
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from productCart where id=?");
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			System.out.println("getproduct by id-----------------------");
+			
+			if(rs.next()) {
+				tempProduct = new Product(rs.getInt("id"),
+						rs.getString("name"), 
+						rs.getInt("price"), 
+						rs.getInt("quantity"));
+			}
+			
+			if(tempProduct != null) {
+				return tempProduct;
+			}else {
+				throw new DataAccessException("Product of" + id + "not found");
+			}
+			
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e.getCause().getMessage());
+		}
+		
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		PreparedStatement pstmt;
+		try {
+			pstmt = connection.prepareStatement("update productCart set price=?, quantity=? where id=?");
+			pstmt.setInt(1, product.getPrice());
+			pstmt.setInt(2, product.getQuantity());
+			pstmt.setInt(3, product.getId());
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e.getCause().getMessage());
+		}
+		
+		
 	}
 
 }

@@ -27,8 +27,8 @@ public class RegisterController extends HttpServlet {
 		
 		try {
 			userService.addUser(tempUser);
-			HttpSession httpSession = request.getSession();
-			httpSession.setAttribute("user", tempUser);
+//			HttpSession httpSession = request.getSession();
+//			httpSession.setAttribute("user", tempUser);
 			response.sendRedirect("login.jsp");
 		}catch(UserNotFoundException e) {
 			response.sendRedirect("login.jsp?error=register failed!");

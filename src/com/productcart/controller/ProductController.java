@@ -21,11 +21,10 @@ public class ProductController extends HttpServlet {
     private ProductService productService = new ProductServiceImpl();
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String action=request.getParameter("action");
 		
 		if(action.equalsIgnoreCase("home")) {
-//			List<Product> products=productService.showAllProducts();
-//			request.setAttribute("products", products);
 			RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
 			rd.forward(request, response);
 		}
@@ -56,14 +55,26 @@ public class ProductController extends HttpServlet {
 		
 		
 		
-		else if(action.equalsIgnoreCase("id")) {
+		else if(action.equalsIgnoreCase("removeById")) {
+			doPost(request, response);
+		} 
+		
+		else if(action.equalsIgnoreCase("updateById")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Product product = productService.getProductById(id);
+			request.setAttribute("product", product);
+			RequestDispatcher rd=request.getRequestDispatcher("updateform.jsp");
+			rd.forward(request, response);
+			
+		}
+		
+		
+		else if(action.equalsIgnoreCase("update")) {
 			List<Product> products=productService.showAllProducts();
 			request.setAttribute("products", products);
-			System.out.println("Enter into do get action = id");
-			String idString =request.getParameter("id");
-			int id = Integer.parseInt(idString.valueOf(idString));
-			System.out.println("id of remove product:" + id);
-			doPost(request, response);
+			
+			RequestDispatcher rd=request.getRequestDispatcher("updateProduct.jsp");
+			rd.forward(request, response);
 		}
 	}
 
@@ -90,15 +101,31 @@ public class ProductController extends HttpServlet {
 			}
 			
 		}
+	
 		
 		
-		
-		else if(action.equalsIgnoreCase("id")) {
-			String idString =request.getParameter("id");
+		else if(action.equalsIgnoreCase("removeById")) {
+			String idString = request.getParameter("id");
 			int id = Integer.parseInt(idString.valueOf(idString));
-			productService.deleteProduct(id);
 			RequestDispatcher rd=request.getRequestDispatcher("ProductController.do?action=show");
 			rd.forward(request, response);
+		}
+		
+		
+		else if(action.equalsIgnoreCase("update")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String productName = request.getParameter("product-name");
+			int price = Integer.parseInt(request.getParameter("price"));
+			int quantity = Integer.parseInt(request.getParameter("quantity"));
+			
+			Product product = new Product(id, productName, price, quantity);
+			productService.updateProduct(product);
+			System.out.println("updated");
+		//	RequestDispatcher rd = request.getRequestDispatcher("ProductController.do?action=show");
+			RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+			rd.forward(request, response);
+			System.out.println("updated again");
+			
 		}
 		
 	}
