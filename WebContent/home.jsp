@@ -16,7 +16,7 @@
   
   
   <div class="btn">
-  <a href="addProduct.jsp"><button>Add a product</button></a>
+  <a href="ProductController.do?action=add"><button>Add a product</button></a>
   </div>
   
   

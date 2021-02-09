@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+${param.message}
 <table border="1">
     <%
         List<Product> products = (List<Product>)request.getAttribute("products");

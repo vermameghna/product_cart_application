@@ -8,11 +8,11 @@
 </head>
 <body>
 
-<form action="ProductController.do?action=update&id=${product.id}" method="POST">
+<form action="ProductController.do" method="POST">
 <table>
 
 <tr>
-<td><input type="text" name="id" value="1" hidden="true"/></td> 
+<td><input type="text" name="id" value="${product.id}" hidden="true"/></td> 
 </tr>
 
 <tr>

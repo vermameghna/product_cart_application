@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.productcart.dao.DataAccessException;
 import com.productcart.productdao.Product;
 import com.productcart.service.ProductService;
 import com.productcart.service.ProductServiceImpl;
@@ -39,7 +38,8 @@ public class ProductController extends HttpServlet {
 		
 		
 		else if(action.equalsIgnoreCase("add")) {
-			doPost(request, response);
+			RequestDispatcher rd=request.getRequestDispatcher("addProduct.jsp");
+			rd.forward(request, response);
 		}
 		
 		
@@ -48,7 +48,6 @@ public class ProductController extends HttpServlet {
 		else if(action.equalsIgnoreCase("remove")) {
 			List<Product> products=productService.showAllProducts();
 			request.setAttribute("products", products);
-			
 			RequestDispatcher rd=request.getRequestDispatcher("removeProduct.jsp");
 			rd.forward(request, response);
 		}
@@ -56,8 +55,25 @@ public class ProductController extends HttpServlet {
 		
 		
 		else if(action.equalsIgnoreCase("removeById")) {
-			doPost(request, response);
+			int id = Integer.parseInt(request.getParameter("id"));
+			productService.deleteProduct(id);
+			List<Product> products=productService.showAllProducts();
+			request.setAttribute("products", products);
+			RequestDispatcher rd=request.getRequestDispatcher("removeProduct.jsp?message=Product removed!");
+			rd.forward(request, response);
+			
+			
 		} 
+		
+		
+		else if(action.equalsIgnoreCase("update")) {
+			List<Product> products=productService.showAllProducts();
+			request.setAttribute("products", products);
+			RequestDispatcher rd=request.getRequestDispatcher("updateProduct.jsp");
+			rd.forward(request, response);
+		}
+		
+		
 		
 		else if(action.equalsIgnoreCase("updateById")) {
 			int id = Integer.parseInt(request.getParameter("id"));
@@ -67,63 +83,39 @@ public class ProductController extends HttpServlet {
 			rd.forward(request, response);
 			
 		}
-		
-		
-		else if(action.equalsIgnoreCase("update")) {
-			List<Product> products=productService.showAllProducts();
-			request.setAttribute("products", products);
-			
-			RequestDispatcher rd=request.getRequestDispatcher("updateProduct.jsp");
-			rd.forward(request, response);
-		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String action=request.getParameter("action");
 		
+		String id = request.getParameter("id");
 		
-		
-		if(action.equalsIgnoreCase("add")) {
+		if(id.equalsIgnoreCase("0")) {
 			
 			String productName = request.getParameter("product-name");
 			int price = Integer.parseInt(request.getParameter("price"));
 			int quantity = Integer.parseInt(request.getParameter("quantity"));
 			
-			Product product = new Product(productName, price, quantity);
-			try {
+			    Product product = new Product(productName, price, quantity);
 				productService.addProduct(product);
-				RequestDispatcher rd=request.getRequestDispatcher("addProduct.jsp");
-				rd.forward(request, response);
-				
-			}catch(DataAccessException e) {
-				System.out.println(e.getCause().getMessage());
-			}
+				List<Product> products=productService.showAllProducts();
+				request.setAttribute("products", products);
+				RequestDispatcher rd=request.getRequestDispatcher("showproduct.jsp");
+				rd.forward(request, response);	
 			
 		}
-	
 		
 		
-		else if(action.equalsIgnoreCase("removeById")) {
-			String idString = request.getParameter("id");
-			int id = Integer.parseInt(idString.valueOf(idString));
-			RequestDispatcher rd=request.getRequestDispatcher("ProductController.do?action=show");
-			rd.forward(request, response);
-		}
-		
-		
-		else if(action.equalsIgnoreCase("update")) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			System.out.println("id---" + id);
+		else {
+			int productId = Integer.parseInt(id);
 			String productName = request.getParameter("product-name");
 			int price = Integer.parseInt(request.getParameter("price"));
-			int quantity = Integer.parseInt(request.getParameter("quantity"));
-			
-			Product product = new Product(id, productName, price, quantity);
+			int quantity = Integer.parseInt(request.getParameter("quantity"));	
+			Product product = new Product(productId, productName, price, quantity);
 			productService.updateProduct(product);
-			System.out.println("updated");
-			RequestDispatcher rd = request.getRequestDispatcher("ProductController.do?action=show");
-			//RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+			List<Product> products=productService.showAllProducts();
+			request.setAttribute("products", products);
+			RequestDispatcher rd = request.getRequestDispatcher("updateProduct.jsp?message=Product Updated!");
 			rd.forward(request, response);
 			
 		}
