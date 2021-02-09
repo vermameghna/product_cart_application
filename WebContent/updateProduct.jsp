@@ -19,7 +19,7 @@
     <th>Name</th>
     <th>Price</th>
     <th>Quantity</th>
-    <th>Remove links</th>
+    <th>Update links</th>
     </tr>
 <%
         for(Product product: products)

@@ -8,8 +8,14 @@
 </head>
 <body>
 
-<form action="ProductController.do?action=add" method="POST">
+<form action="ProductController.do" method="POST">
 <table>
+
+
+<tr>
+<td><input type="text" name="id" value="0" hidden="true"/></td> 
+</tr>
+
 <tr>
 <td>Enter Product Name:</td> 
 <td><input type="text" name="product-name"/></td> 

@@ -10,6 +10,11 @@
 
 <form action="ProductController.do?action=update&id=${product.id}" method="POST">
 <table>
+
+<tr>
+<td><input type="text" name="id" value="1" hidden="true"/></td> 
+</tr>
+
 <tr>
 <td>Enter Product Name:</td> 
 <td><input type="text" name="product-name" value="${product.name}" readonly/></td> 

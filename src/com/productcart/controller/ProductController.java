@@ -114,6 +114,7 @@ public class ProductController extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("update")) {
 			int id = Integer.parseInt(request.getParameter("id"));
+			System.out.println("id---" + id);
 			String productName = request.getParameter("product-name");
 			int price = Integer.parseInt(request.getParameter("price"));
 			int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -121,10 +122,9 @@ public class ProductController extends HttpServlet {
 			Product product = new Product(id, productName, price, quantity);
 			productService.updateProduct(product);
 			System.out.println("updated");
-		//	RequestDispatcher rd = request.getRequestDispatcher("ProductController.do?action=show");
-			RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("ProductController.do?action=show");
+			//RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
 			rd.forward(request, response);
-			System.out.println("updated again");
 			
 		}
 		
